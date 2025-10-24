@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -6,13 +7,15 @@
     <title>C93 Komputer - Toko Komputer, Laptop & Aksesoris Terlengkap</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-red: #e53935;
             --dark-red: #c62828;
+            --light-red: #ffcdd2;
+            --dark-gray: #212121;
+            --medium-gray: #757575;
             --light-gray: #f5f5f5;
-            --dark-gray: #424242;
         }
         
         * {
@@ -25,6 +28,7 @@
         body {
             background-color: #f9f9f9;
             color: #333;
+            overflow-x: hidden;
         }
         
         .header-gradient {
@@ -47,29 +51,31 @@
             position: absolute;
             top: 12px;
             left: 12px;
-            background: var(--primary-red);
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
             color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 2;
         }
         
         .best-seller-badge {
             position: absolute;
             top: 12px;
             right: 12px;
-            background: #ff9800;
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
             color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 2;
         }
         
         .cart-sidebar {
             transform: translateX(100%);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
         }
         
         .cart-sidebar.active {
@@ -79,7 +85,7 @@
         .cart-overlay {
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
         
         .cart-overlay.active {
@@ -89,19 +95,11 @@
         
         .notification {
             transform: translateY(-100%);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
         }
         
         .notification.active {
             transform: translateY(0);
-        }
-        
-        .search-box {
-            transition: all 0.3s ease;
-        }
-        
-        .search-box:focus {
-            box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.2);
         }
         
         .category-card {
@@ -123,6 +121,14 @@
         .floating-cart {
             position: fixed;
             bottom: 20px;
+            right: 20px;
+            z-index: 40;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .floating-wa {
+            position: fixed;
+            bottom: 90px;
             right: 20px;
             z-index: 40;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -180,11 +186,143 @@
         .mobile-menu.active {
             transform: translateX(0);
         }
+        
+        .product-detail-modal {
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        
+        .product-detail-modal.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .product-image-main {
+            transition: all 0.3s ease;
+        }
+        
+        .thumbnail {
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .thumbnail.active {
+            border-color: var(--primary-red);
+        }
+        
+        .specs-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 90px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 50;
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+        
+        .chat-widget.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 16px 16px 0 0;
+        }
+        
+        .chat-messages {
+            height: 320px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f9f9f9;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .message.user {
+            background: var(--primary-red);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .message.bot {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .chat-input {
+            border-top: 1px solid #e0e0e0;
+            padding: 15px;
+            background: white;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-red) 0%, transparent 100%);
+            border-radius: 2px;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(229, 57, 53, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(229, 57, 53, 0);
+            }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
     <!-- Header & Navigation -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
+    <header class="bg-white shadow-md sticky top-0 z-40">
         <div class="container mx-auto px-4 py-3">
             <!-- Top Bar -->
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
@@ -199,7 +337,7 @@
                 <!-- Search Bar -->
                 <div class="relative w-full md:w-1/3">
                     <input type="text" placeholder="Cari produk, merek, atau kategori..." 
-                           class="w-full py-3 px-4 pr-12 rounded-full border border-gray-300 focus:outline-none search-box">
+                           class="w-full py-3 px-4 pr-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600">
                     <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-red-600">
                         <i class="fas fa-search"></i>
                     </button>
@@ -236,7 +374,6 @@
                 <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">Keyboard & Mouse</a>
                 <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">Aksesoris</a>
                 <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">Software</a>
-                <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">Perangkat Jaringan</a>
             </div>
         </div>
     </header>
@@ -282,27 +419,10 @@
 
     <!-- Hero Section -->
     <section class="header-gradient text-white py-12 md:py-16">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-8 md:mb-0">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Teknologi Terkini untuk Kebutuhan Digital Anda</h2>
-                    <p class="text-xl mb-6">Temukan laptop, komputer, dan aksesoris terbaik dengan harga terjangkau hanya di C93 Komputer</p>
-                    <div class="flex space-x-4">
-                        <a href="#produk" class="bg-white text-red-600 font-bold px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-300">Belanja Sekarang</a>
-                        <a href="#promo" class="bg-transparent border-2 border-white text-white font-bold px-6 py-3 rounded-lg hover:bg-white hover:text-red-600 transition duration-300">Lihat Promo</a>
-                    </div>
-                </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <div class="relative w-full max-w-md">
-                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                             alt="Laptop and Accessories" class="rounded-lg shadow-2xl">
-                        <div class="absolute -bottom-4 -left-4 bg-white text-gray-800 p-4 rounded-lg shadow-lg">
-                            <p class="font-bold">Diskon hingga 30%</p>
-                            <p class="text-sm">Untuk produk pilihan</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Toko Komputer & Laptop Terlengkap</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Temukan komputer, laptop, dan aksesoris terbaik dengan harga terjangkau hanya di C93 Komputer</p>
+            <a href="#produk" class="bg-white text-red-600 font-bold px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-300">Lihat Produk</a>
         </div>
     </section>
 
@@ -468,73 +588,6 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="py-12 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">Apa Kata Pelanggan Kami</h2>
-            <p class="text-gray-600 text-center mb-10">Testimoni dari pelanggan setia C93 Komputer</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-gray-50 p-6 rounded-xl">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
-                            <i class="fas fa-user text-red-600"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800">Ahmad Rizki</h4>
-                            <div class="rating-stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600">"Laptop gaming yang saya beli berkualitas tinggi dan harga bersaing. Pengiriman cepat dan packaging aman. Recommended!"</p>
-                </div>
-                
-                <div class="bg-gray-50 p-6 rounded-xl">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
-                            <i class="fas fa-user text-red-600"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800">Sari Dewi</h4>
-                            <div class="rating-stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600">"Pelayanan customer service sangat ramah dan membantu. PC rakitan sesuai kebutuhan saya dengan harga terjangkau."</p>
-                </div>
-                
-                <div class="bg-gray-50 p-6 rounded-xl">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
-                            <i class="fas fa-user text-red-600"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800">Budi Santoso</h4>
-                            <div class="rating-stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600">"Barang sampai dengan cepat, kondisi baik, dan sesuai deskripsi. Garansi resmi membuat saya tenang berbelanja di sini."</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="bg-gray-900 text-white pt-12 pb-6">
         <div class="container mx-auto px-4">
@@ -659,6 +712,126 @@
         <span id="floating-cart-count" class="absolute -top-1 -right-1 bg-white text-red-600 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">0</span>
     </button>
 
+    <!-- Floating WA Button -->
+    <button id="floating-wa" class="floating-wa bg-green-600 text-white p-4 rounded-full shadow-lg hover:bg-green-700 transition duration-300 pulse-animation">
+        <i class="fab fa-whatsapp text-xl"></i>
+    </button>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chat-widget">
+        <div class="chat-header flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-3">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold">C93 Komputer</h3>
+                    <p class="text-xs opacity-80">Online</p>
+                </div>
+            </div>
+            <button id="close-chat" class="text-white/80 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot">
+                Halo! Selamat datang di C93 Komputer. Ada yang bisa saya bantu?
+            </div>
+        </div>
+        
+        <div class="chat-input">
+            <div class="flex">
+                <input type="text" placeholder="Ketik pesan..." class="flex-grow py-2 px-4 border border-gray-300 rounded-l-lg focus:outline-none" id="chat-input">
+                <button class="bg-green-600 text-white py-2 px-4 rounded-r-lg hover:bg-green-700 transition duration-300" id="send-message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="product-detail-modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" id="product-detail-modal">
+        <div class="bg-white rounded-xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800" id="detail-product-name">Nama Produk</h2>
+                    <button id="close-detail" class="text-gray-500 hover:text-black">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Product Images -->
+                    <div>
+                        <div class="mb-4 rounded-lg overflow-hidden">
+                            <img id="detail-main-image" src="" alt="Product Image" class="w-full h-80 object-cover product-image-main">
+                        </div>
+                        <div class="flex space-x-2 overflow-x-auto" id="detail-thumbnails">
+                            <!-- Thumbnails will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Product Info -->
+                    <div>
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <div class="rating-stars text-lg mr-2" id="detail-rating">
+                                    <!-- Stars will be loaded here -->
+                                </div>
+                                <span class="text-gray-600 text-sm" id="detail-review-count">(0 ulasan)</span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <span class="text-2xl font-bold text-red-600 mr-2" id="detail-price">Rp 0</span>
+                                <span class="text-lg text-gray-500 line-through" id="detail-original-price"></span>
+                                <span class="ml-2 bg-red-100 text-red-600 px-2 py-1 rounded text-sm font-medium" id="detail-discount"></span>
+                            </div>
+                            <p class="text-gray-700 mb-4" id="detail-description">Deskripsi produk</p>
+                            
+                            <div class="mb-6">
+                                <h3 class="font-bold text-gray-800 mb-2">Spesifikasi:</h3>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <table class="w-full specs-table" id="detail-specs">
+                                        <!-- Specifications will be loaded here -->
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="flex space-x-4 mb-6">
+                                <div class="flex items-center">
+                                    <button class="bg-gray-200 text-gray-700 w-8 h-8 rounded-l-lg flex items-center justify-center" id="decrease-quantity-detail">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input type="number" value="1" min="1" class="w-12 h-8 border-y border-gray-300 text-center" id="quantity-detail">
+                                    <button class="bg-gray-200 text-gray-700 w-8 h-8 rounded-r-lg flex items-center justify-center" id="increase-quantity-detail">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <button class="flex-1 bg-red-600 text-white py-2 rounded-lg font-medium hover:bg-red-700 transition duration-300" id="add-to-cart-detail">
+                                    <i class="fas fa-cart-plus mr-2"></i> Tambah ke Keranjang
+                                </button>
+                            </div>
+                            
+                            <div class="flex space-x-2">
+                                <button class="flex-1 bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-700 transition duration-300 flex items-center justify-center">
+                                    <i class="fab fa-whatsapp mr-2"></i> Beli via WhatsApp
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Reviews -->
+                <div class="mt-8 border-t border-gray-200 pt-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Ulasan Pembeli</h3>
+                    <div id="detail-reviews">
+                        <!-- Reviews will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Notification -->
     <div id="notification" class="notification fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50">
         <div class="flex items-center">
@@ -676,12 +849,38 @@
                 category: "laptop",
                 price: 18500000,
                 originalPrice: 21500000,
-                image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                description: "Laptop gaming dengan processor Intel i7, RAM 16GB, dan GPU RTX 3060.",
+                images: [
+                    "https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                    "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                    "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                ],
+                description: "Laptop gaming dengan processor Intel i7, RAM 16GB, dan GPU RTX 3060. Cocok untuk gaming dan produktivitas tinggi.",
                 rating: 4.8,
                 reviewCount: 124,
                 discount: 14,
-                isBestSeller: true
+                isBestSeller: true,
+                specifications: {
+                    "Processor": "Intel Core i7-11800H",
+                    "RAM": "16GB DDR4",
+                    "Storage": "1TB SSD NVMe",
+                    "Graphics": "NVIDIA GeForce RTX 3060 6GB",
+                    "Display": "15.6 inch FHD 144Hz",
+                    "OS": "Windows 11 Home"
+                },
+                reviews: [
+                    {
+                        name: "Ahmad Rizki",
+                        rating: 5,
+                        comment: "Laptop kencang banget, cocok untuk gaming dan kerja. Desainnya juga keren!",
+                        date: "2023-05-15"
+                    },
+                    {
+                        name: "Sari Dewi",
+                        rating: 4,
+                        comment: "Performanya bagus, cuma agak berat buat dibawa-bawa. Tapi overall puas!",
+                        date: "2023-04-22"
+                    }
+                ]
             },
             {
                 id: 2,
@@ -689,12 +888,31 @@
                 category: "laptop",
                 price: 24500000,
                 originalPrice: 0,
-                image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                description: "Laptop premium Apple dengan chip M2, layar Retina, dan performa tinggi.",
+                images: [
+                    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                    "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                ],
+                description: "Laptop premium Apple dengan chip M2, layar Retina, dan performa tinggi untuk profesional.",
                 rating: 4.9,
                 reviewCount: 89,
                 discount: 0,
-                isBestSeller: true
+                isBestSeller: true,
+                specifications: {
+                    "Processor": "Apple M2 Chip",
+                    "RAM": "8GB Unified Memory",
+                    "Storage": "512GB SSD",
+                    "Graphics": "10-core GPU",
+                    "Display": "13.3 inch Retina",
+                    "OS": "macOS Ventura"
+                },
+                reviews: [
+                    {
+                        name: "Budi Santoso",
+                        rating: 5,
+                        comment: "Performanya luar biasa, baterai tahan lama. Worth the price!",
+                        date: "2023-06-10"
+                    }
+                ]
             },
             {
                 id: 3,
@@ -702,109 +920,76 @@
                 category: "komputer",
                 price: 32500000,
                 originalPrice: 36500000,
-                image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                description: "PC gaming dengan processor Intel i9, RAM 32GB, GPU RTX 4080, dan SSD 2TB.",
+                images: [
+                    "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                    "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                ],
+                description: "PC gaming dengan processor Intel i9, RAM 32GB, GPU RTX 4080, dan SSD 2TB. Performa maksimal untuk gaming 4K.",
                 rating: 4.7,
                 reviewCount: 67,
                 discount: 11,
-                isBestSeller: false
+                isBestSeller: false,
+                specifications: {
+                    "Processor": "Intel Core i9-13900K",
+                    "RAM": "32GB DDR5",
+                    "Storage": "2TB SSD NVMe",
+                    "Graphics": "NVIDIA GeForce RTX 4080 16GB",
+                    "Power Supply": "1000W 80+ Gold",
+                    "Cooling": "Liquid Cooling System"
+                },
+                reviews: [
+                    {
+                        name: "Rizky Pratama",
+                        rating: 5,
+                        comment: "PC monster! Semua game jalan di setting maksimal tanpa lag. Recommended!",
+                        date: "2023-05-28"
+                    }
+                ]
             },
             {
                 id: 4,
-                name: "Dell Inspiron All-in-One",
-                category: "komputer",
-                price: 12500000,
-                originalPrice: 14500000,
-                image: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                description: "PC All-in-One dengan layar 24 inci, processor Intel i5, dan RAM 8GB.",
-                rating: 4.5,
-                reviewCount: 42,
-                discount: 14,
-                isBestSeller: false
-            },
-            {
-                id: 5,
                 name: "Razer DeathAdder V2",
                 category: "aksesoris",
                 price: 850000,
                 originalPrice: 1050000,
-                image: "https://images.unsplash.com/photo-1527814050087-3793815479db?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1527814050087-3793815479db?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                    "https://images.unsplash.com/photo-1563297007-0686b7003af7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                ],
                 description: "Mouse gaming dengan sensor presisi tinggi dan lampu RGB yang dapat disesuaikan.",
                 rating: 4.6,
                 reviewCount: 156,
                 discount: 19,
-                isBestSeller: true
-            },
-            {
-                id: 6,
-                name: "Logitech G Pro Keyboard",
-                category: "aksesoris",
-                price: 1850000,
-                originalPrice: 0,
-                image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                description: "Keyboard mechanical dengan switch merah, backlit RGB, dan desain ergonomis.",
-                rating: 4.7,
-                reviewCount: 98,
-                discount: 0,
-                isBestSeller: false
-            },
-            {
-                id: 7,
-                name: "Dell XPS 13 Plus",
-                category: "laptop",
-                price: 19500000,
-                originalPrice: 22500000,
-                image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                description: "Laptop ultrabook dengan layar InfinityEdge, processor Intel i7, dan RAM 16GB.",
-                rating: 4.8,
-                reviewCount: 73,
-                discount: 13,
-                isBestSeller: true
-            },
-            {
-                id: 8,
-                name: "Samsung Odyssey G7",
-                category: "aksesoris",
-                price: 6200000,
-                originalPrice: 7200000,
-                image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                description: "Monitor gaming 27 inci dengan refresh rate 240Hz dan resolusi 2K.",
-                rating: 4.9,
-                reviewCount: 112,
-                discount: 14,
-                isBestSeller: true
-            },
-            {
-                id: 9,
-                name: "HP Pavilion Gaming 15",
-                category: "laptop",
-                price: 12500000,
-                originalPrice: 14500000,
-                image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                description: "Laptop gaming dengan GTX 1650, Intel i5, dan RAM 8GB untuk gaming casual.",
-                rating: 4.4,
-                reviewCount: 87,
-                discount: 14,
-                isBestSeller: false
-            },
-            {
-                id: 10,
-                name: "HyperX Cloud II Headset",
-                category: "aksesoris",
-                price: 950000,
-                originalPrice: 1250000,
-                image: "https://images.unsplash.com/photo-1585298723680-6d84eaa9e4e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                description: "Headset gaming dengan suara surround 7.1 dan mikrofon noise-cancelling.",
-                rating: 4.7,
-                reviewCount: 203,
-                discount: 24,
-                isBestSeller: true
+                isBestSeller: true,
+                specifications: {
+                    "Sensor": "Optical 20,000 DPI",
+                    "Buttons": "8 Programmable",
+                    "Connection": "Wired USB",
+                    "RGB Lighting": "Chroma RGB",
+                    "Weight": "82g",
+                    "Compatibility": "PC, PS4, PS5"
+                },
+                reviews: [
+                    {
+                        name: "Gaming Enthusiast",
+                        rating: 4,
+                        comment: "Sensor akurat, grip nyaman. Cuma kabelnya agak kaku.",
+                        date: "2023-04-15"
+                    },
+                    {
+                        name: "Andi Wijaya",
+                        rating: 5,
+                        comment: "Mouse terbaik yang pernah saya pakai. Responsif dan nyaman di tangan.",
+                        date: "2023-03-22"
+                    }
+                ]
             }
         ];
 
         // State aplikasi
         let cart = [];
         let currentCategory = 'all';
+        let currentProductDetail = null;
 
         // DOM Elements
         const productList = document.getElementById('product-list');
@@ -826,6 +1011,29 @@
         const mobileMenu = document.getElementById('mobile-menu');
         const closeMobileMenu = document.getElementById('close-mobile-menu');
         const tabButtons = document.querySelectorAll('.tab-button');
+        const floatingWa = document.getElementById('floating-wa');
+        const chatWidget = document.getElementById('chat-widget');
+        const closeChat = document.getElementById('close-chat');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendMessage = document.getElementById('send-message');
+        const productDetailModal = document.getElementById('product-detail-modal');
+        const closeDetail = document.getElementById('close-detail');
+        const detailProductName = document.getElementById('detail-product-name');
+        const detailMainImage = document.getElementById('detail-main-image');
+        const detailThumbnails = document.getElementById('detail-thumbnails');
+        const detailRating = document.getElementById('detail-rating');
+        const detailReviewCount = document.getElementById('detail-review-count');
+        const detailPrice = document.getElementById('detail-price');
+        const detailOriginalPrice = document.getElementById('detail-original-price');
+        const detailDiscount = document.getElementById('detail-discount');
+        const detailDescription = document.getElementById('detail-description');
+        const detailSpecs = document.getElementById('detail-specs');
+        const detailReviews = document.getElementById('detail-reviews');
+        const decreaseQuantityDetail = document.getElementById('decrease-quantity-detail');
+        const increaseQuantityDetail = document.getElementById('increase-quantity-detail');
+        const quantityDetail = document.getElementById('quantity-detail');
+        const addToCartDetail = document.getElementById('add-to-cart-detail');
 
         // Format harga ke Rupiah
         function formatRupiah(amount) {
@@ -858,17 +1066,17 @@
                     : '';
                 
                 const productCard = document.createElement('div');
-                productCard.className = 'product-card bg-white rounded-xl overflow-hidden';
+                productCard.className = 'product-card bg-white rounded-lg overflow-hidden';
                 productCard.innerHTML = `
                     <div class="relative">
-                        <div class="h-40 overflow-hidden">
-                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                        <div class="h-48 overflow-hidden">
+                            <img src="${product.images[0]}" alt="${product.name}" class="w-full h-full object-cover">
                         </div>
                         ${discountPercentage}
                         ${bestSellerBadge}
                     </div>
                     <div class="p-4">
-                        <h3 class="font-bold text-gray-800 mb-1 truncate">${product.name}</h3>
+                        <h3 class="font-bold text-gray-800 mb-2 truncate">${product.name}</h3>
                         <div class="flex items-center mb-2">
                             <div class="rating-stars text-sm mr-2">
                                 ${renderStars(product.rating)}
@@ -879,9 +1087,14 @@
                             <div class="text-red-600 font-bold text-lg">${formatRupiah(product.price)}</div>
                             ${originalPrice}
                         </div>
-                        <button class="add-to-cart w-full bg-red-600 text-white py-2 rounded-lg font-medium hover:bg-red-700 transition duration-300 flex items-center justify-center" data-id="${product.id}">
-                            <i class="fas fa-cart-plus mr-2"></i> Tambah
-                        </button>
+                        <div class="flex space-x-2">
+                            <button class="view-detail flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg font-medium hover:bg-gray-300 transition duration-300" data-id="${product.id}">
+                                <i class="far fa-eye mr-1"></i> Detail
+                            </button>
+                            <button class="add-to-cart bg-red-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-red-700 transition duration-300" data-id="${product.id}">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
                     </div>
                 `;
                 productList.appendChild(productCard);
@@ -892,6 +1105,14 @@
                 button.addEventListener('click', function() {
                     const productId = parseInt(this.getAttribute('data-id'));
                     addToCart(productId);
+                });
+            });
+            
+            // Tambahkan event listener untuk tombol lihat detail
+            document.querySelectorAll('.view-detail').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    showProductDetail(productId);
                 });
             });
         }
@@ -918,20 +1139,102 @@
             return stars;
         }
 
+        // Tampilkan detail produk
+        function showProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            currentProductDetail = product;
+            
+            // Set data produk ke modal
+            detailProductName.textContent = product.name;
+            detailMainImage.src = product.images[0];
+            detailRating.innerHTML = renderStars(product.rating);
+            detailReviewCount.textContent = `(${product.reviewCount} ulasan)`;
+            detailPrice.textContent = formatRupiah(product.price);
+            
+            if (product.originalPrice > 0) {
+                detailOriginalPrice.textContent = formatRupiah(product.originalPrice);
+                detailDiscount.textContent = `-${product.discount}%`;
+            } else {
+                detailOriginalPrice.textContent = '';
+                detailDiscount.textContent = '';
+            }
+            
+            detailDescription.textContent = product.description;
+            
+            // Render thumbnails
+            detailThumbnails.innerHTML = '';
+            product.images.forEach((image, index) => {
+                const thumbnail = document.createElement('div');
+                thumbnail.className = `thumbnail flex-shrink-0 w-16 h-16 bg-gray-200 rounded-lg overflow-hidden ${index === 0 ? 'active' : ''}`;
+                thumbnail.innerHTML = `<img src="${image}" alt="Thumbnail ${index + 1}" class="w-full h-full object-cover">`;
+                thumbnail.addEventListener('click', () => {
+                    // Hapus kelas active dari semua thumbnail
+                    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                    // Tambahkan kelas active ke thumbnail yang diklik
+                    thumbnail.classList.add('active');
+                    // Ubah gambar utama
+                    detailMainImage.src = image;
+                });
+                detailThumbnails.appendChild(thumbnail);
+            });
+            
+            // Render spesifikasi
+            detailSpecs.innerHTML = '';
+            for (const [key, value] of Object.entries(product.specifications)) {
+                const row = document.createElement('tr');
+                row.className = 'py-2';
+                row.innerHTML = `
+                    <td class="py-2 font-medium text-gray-700">${key}</td>
+                    <td class="py-2 text-gray-600">${value}</td>
+                `;
+                detailSpecs.appendChild(row);
+            }
+            
+            // Render ulasan
+            detailReviews.innerHTML = '';
+            if (product.reviews.length > 0) {
+                product.reviews.forEach(review => {
+                    const reviewElement = document.createElement('div');
+                    reviewElement.className = 'border-b border-gray-200 pb-4 mb-4';
+                    reviewElement.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h4 class="font-bold text-gray-800">${review.name}</h4>
+                                <div class="rating-stars text-sm">
+                                    ${renderStars(review.rating)}
+                                </div>
+                            </div>
+                            <span class="text-gray-500 text-sm">${review.date}</span>
+                        </div>
+                        <p class="text-gray-700">${review.comment}</p>
+                    `;
+                    detailReviews.appendChild(reviewElement);
+                });
+            } else {
+                detailReviews.innerHTML = '<p class="text-gray-500 text-center py-4">Belum ada ulasan untuk produk ini.</p>';
+            }
+            
+            // Reset quantity
+            quantityDetail.value = 1;
+            
+            // Tampilkan modal
+            productDetailModal.classList.add('active');
+        }
+
         // Tambah produk ke keranjang
-        function addToCart(productId) {
+        function addToCart(productId, quantity = 1) {
             const product = products.find(p => p.id === productId);
             const existingItem = cart.find(item => item.id === productId);
             
             if (existingItem) {
-                existingItem.quantity += 1;
+                existingItem.quantity += quantity;
             } else {
                 cart.push({
                     id: product.id,
                     name: product.name,
                     price: product.price,
-                    image: product.image,
-                    quantity: 1
+                    image: product.images[0],
+                    quantity: quantity
                 });
             }
             
@@ -968,7 +1271,7 @@
                             <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
                         </div>
                         <div class="ml-4 flex-1">
-                            <h4 class="text-sm font-medium text-gray-800 truncate">${item.name}</h4>
+                            <h4 class="text-sm font-medium text-gray-800">${item.name}</h4>
                             <div class="flex justify-between items-center mt-1">
                                 <span class="text-red-600 font-bold">${formatRupiah(item.price)}</span>
                                 <div class="flex items-center">
@@ -1058,6 +1361,44 @@
             window.open(url, '_blank');
         }
 
+        // Fungsi chat
+        function sendChatMessage() {
+            const message = chatInput.value.trim();
+            if (message === '') return;
+            
+            // Tambahkan pesan pengguna
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user';
+            userMessage.textContent = message;
+            chatMessages.appendChild(userMessage);
+            
+            // Kosongkan input
+            chatInput.value = '';
+            
+            // Scroll ke bawah
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Simulasi balasan otomatis
+            setTimeout(() => {
+                const botMessage = document.createElement('div');
+                botMessage.className = 'message bot';
+                
+                // Respons sederhana berdasarkan kata kunci
+                if (message.toLowerCase().includes('harga') || message.toLowerCase().includes('berapa')) {
+                    botMessage.textContent = 'Untuk informasi harga terbaru, silakan lihat di halaman produk atau hubungi kami via WhatsApp di +62 812-3456-7890';
+                } else if (message.toLowerCase().includes('stok') || message.toLowerCase().includes('ada')) {
+                    botMessage.textContent = 'Untuk informasi ketersediaan stok, silakan hubungi kami via WhatsApp di +62 812-3456-7890 atau cek langsung di halaman produk.';
+                } else if (message.toLowerCase().includes('promo') || message.toLowerCase().includes('diskon')) {
+                    botMessage.textContent = 'Kami sedang memiliki promo menarik! Silakan cek bagian promo di website atau hubungi kami untuk informasi lebih lanjut.';
+                } else {
+                    botMessage.textContent = 'Terima kasih atas pesan Anda. Untuk informasi lebih lanjut, silakan hubungi kami via WhatsApp di +62 812-3456-7890.';
+                }
+                
+                chatMessages.appendChild(botMessage);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+        }
+
         // Event Listeners
         cartToggle.addEventListener('click', () => {
             cartSidebar.classList.add('active');
@@ -1109,17 +1450,54 @@
             alert('Fitur checkout di halaman akan segera tersedia!');
         });
 
+        // Chat functionality
+        floatingWa.addEventListener('click', () => {
+            chatWidget.classList.toggle('active');
+        });
+
+        closeChat.addEventListener('click', () => {
+            chatWidget.classList.remove('active');
+        });
+
+        sendMessage.addEventListener('click', sendChatMessage);
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        });
+
+        // Product detail functionality
+        closeDetail.addEventListener('click', () => {
+            productDetailModal.classList.remove('active');
+        });
+
+        productDetailModal.addEventListener('click', (e) => {
+            if (e.target === productDetailModal) {
+                productDetailModal.classList.remove('active');
+            }
+        });
+
+        decreaseQuantityDetail.addEventListener('click', () => {
+            if (parseInt(quantityDetail.value) > 1) {
+                quantityDetail.value = parseInt(quantityDetail.value) - 1;
+            }
+        });
+
+        increaseQuantityDetail.addEventListener('click', () => {
+            quantityDetail.value = parseInt(quantityDetail.value) + 1;
+        });
+
+        addToCartDetail.addEventListener('click', () => {
+            if (currentProductDetail) {
+                addToCart(currentProductDetail.id, parseInt(quantityDetail.value));
+                productDetailModal.classList.remove('active');
+            }
+        });
+
         // Inisialisasi
         renderProducts();
         updateCart();
-
-        // Countdown timer untuk promo
-        function updateCountdown() {
-            // Implementasi countdown timer bisa ditambahkan di sini
-        }
-
-        // Jalankan countdown setiap detik
-        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
