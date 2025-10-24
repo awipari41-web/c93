@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C93 Komputer - Toko Komputer, Laptop & Aksesoris Terlengkap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #e53935;
+            --dark-red: #c62828;
+            --light-gray: #f5f5f5;
+            --dark-gray: #424242;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        .header-gradient {
+            background: linear-gradient(135deg, var(--primary-red) 0%, #000000 100%);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .discount-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--primary-red);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .best-seller-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ff9800;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .cart-sidebar {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .cart-sidebar.active {
+            transform: translateX(0);
+        }
+        
+        .cart-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .notification {
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.active {
+            transform: translateY(0);
+        }
+        
+        .search-box {
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus {
+            box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.2);
+        }
+        
+        .category-card {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .promo-banner {
+            background: linear-gradient(90deg, var(--primary-red) 0%, #ff6b6b 100%);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .floating-cart {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 40;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .rating-stars {
+            color: #ffc107;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(229, 57, 53, 0.1);
+            color: var(--primary-red);
+            font-size: 1.5rem;
+        }
+        
+        .scroll-container {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-red) #f1f1f1;
+        }
+        
+        .scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .scroll-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: var(--primary-red);
+            border-radius: 10px;
+        }
+        
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            background-color: var(--primary-red);
+            color: white;
+        }
+        
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <!-- Top Bar -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mr-3">
+                        <span class="text-white font-bold text-lg">C93</span>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-800">C93 <span class="text-red-600">Komputer</span></h1>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="relative w-full md:w-1/3">
+                    <input type="text" placeholder="Cari produk, merek, atau kategori..." 
+                           class="w-full py-3 px-4 pr-12 rounded-full border border-gray-300 focus:outline-none search-box">
+                    <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-red-600">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <!-- User Actions -->
+                <div class="flex items-center space-x-6">
+                    <button class="hidden md:flex items-center text-gray-700 hover:text-red-600">
+                        <i class="far fa-user text-xl mr-1"></i>
+                        <span class="text-sm">Akun</span>
+                    </button>
+                    <button class="hidden md:flex items-center text-gray-700 hover:text-red-600">
+                        <i class="far fa-heart text-xl mr-1"></i>
+                        <span class="text-sm">Favorit</span>
+                    </button>
+                    <button id="cart-toggle" class="relative flex items-center text-gray-700 hover:text-red-600">
+                        <i class="fas fa-shopping-cart text-xl mr-1"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        <span class="text-sm hidden md:inline">Keranjang</span>
+                    </button>
+                    <button id="mobile-menu-toggle" class="md:hidden text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Categories Navigation -->
+            <div class="flex overflow-x-auto scroll-container py-2 space-x-6">
+                <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">Semua Produk</a>
+                <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">Laptop</a>
+                <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">PC Gaming</a>
+                <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">Komponen PC</a>
+                <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">Monitor</a>
+                <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">Keyboard & Mouse</a>
+                <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">Aksesoris</a>
+                <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">Software</a>
+                <a href="#" class="text-sm font-medium text-gray-700 whitespace-nowrap hover:text-red-600">Perangkat Jaringan</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 bg-white z-50 p-6 md:hidden">
+        <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mr-3">
+                    <span class="text-white font-bold text-lg">C93</span>
+                </div>
+                <h1 class="text-xl font-bold text-gray-800">C93 <span class="text-red-600">Komputer</span></h1>
+            </div>
+            <button id="close-mobile-menu" class="text-gray-700">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+        </div>
+        
+        <div class="space-y-6">
+            <a href="#" class="block text-lg font-medium text-gray-800">Beranda</a>
+            <a href="#produk" class="block text-lg font-medium text-gray-800">Produk</a>
+            <a href="#kategori" class="block text-lg font-medium text-gray-800">Kategori</a>
+            <a href="#promo" class="block text-lg font-medium text-gray-800">Promo</a>
+            <a href="#tentang" class="block text-lg font-medium text-gray-800">Tentang Kami</a>
+            <a href="#kontak" class="block text-lg font-medium text-gray-800">Kontak</a>
+            
+            <div class="pt-6 border-t border-gray-200">
+                <button class="flex items-center text-gray-700 mb-4">
+                    <i class="far fa-user text-xl mr-3"></i>
+                    <span class="text-lg">Akun Saya</span>
+                </button>
+                <button class="flex items-center text-gray-700 mb-4">
+                    <i class="far fa-heart text-xl mr-3"></i>
+                    <span class="text-lg">Favorit</span>
+                </button>
+                <button class="flex items-center text-gray-700">
+                    <i class="fas fa-shopping-cart text-xl mr-3"></i>
+                    <span class="text-lg">Keranjang</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="header-gradient text-white py-12 md:py-16">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Teknologi Terkini untuk Kebutuhan Digital Anda</h2>
+                    <p class="text-xl mb-6">Temukan laptop, komputer, dan aksesoris terbaik dengan harga terjangkau hanya di C93 Komputer</p>
+                    <div class="flex space-x-4">
+                        <a href="#produk" class="bg-white text-red-600 font-bold px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-300">Belanja Sekarang</a>
+                        <a href="#promo" class="bg-transparent border-2 border-white text-white font-bold px-6 py-3 rounded-lg hover:bg-white hover:text-red-600 transition duration-300">Lihat Promo</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Laptop and Accessories" class="rounded-lg shadow-2xl">
+                        <div class="absolute -bottom-4 -left-4 bg-white text-gray-800 p-4 rounded-lg shadow-lg">
+                            <p class="font-bold">Diskon hingga 30%</p>
+                            <p class="text-sm">Untuk produk pilihan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="flex flex-col items-center text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">Gratis Ongkir</h3>
+                    <p class="text-sm text-gray-600">Min. belanja Rp 500.000</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">Garansi Resmi</h3>
+                    <p class="text-sm text-gray-600">1-3 tahun tergantung produk</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">Bantuan 24/7</h3>
+                    <p class="text-sm text-gray-600">Customer service siap membantu</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-undo-alt"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">Pengembalian</h3>
+                    <p class="text-sm text-gray-600">Dalam 14 hari</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="kategori" class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">Kategori Produk</h2>
+            <p class="text-gray-600 text-center mb-10">Temukan produk sesuai kebutuhan Anda</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="category-card bg-white p-6 text-center rounded-xl shadow-sm">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-laptop text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">Laptop</h3>
+                    <p class="text-sm text-gray-600">Gaming, Kantor, Ultrabook</p>
+                </div>
+                
+                <div class="category-card bg-white p-6 text-center rounded-xl shadow-sm">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-desktop text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">PC & Komputer</h3>
+                    <p class="text-sm text-gray-600">Gaming, Kantor, All-in-One</p>
+                </div>
+                
+                <div class="category-card bg-white p-6 text-center rounded-xl shadow-sm">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-microchip text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">Komponen</h3>
+                    <p class="text-sm text-gray-600">Processor, VGA, RAM, SSD</p>
+                </div>
+                
+                <div class="category-card bg-white p-6 text-center rounded-xl shadow-sm">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-keyboard text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">Aksesoris</h3>
+                    <p class="text-sm text-gray-600">Keyboard, Mouse, Headset</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo Banner -->
+    <section id="promo" class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="promo-banner p-8 md:p-12 text-white">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-2/3 mb-6 md:mb-0">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Flash Sale Akhir Bulan!</h2>
+                        <p class="text-lg mb-6">Dapatkan diskon hingga 40% untuk produk pilihan. Buruan, promo terbatas!</p>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <div class="bg-white text-red-600 px-3 py-1 rounded font-bold">00</div>
+                            <span>:</span>
+                            <div class="bg-white text-red-600 px-3 py-1 rounded font-bold">12</div>
+                            <span>:</span>
+                            <div class="bg-white text-red-600 px-3 py-1 rounded font-bold">45</div>
+                            <span>:</span>
+                            <div class="bg-white text-red-600 px-3 py-1 rounded font-bold">32</div>
+                        </div>
+                        <a href="#" class="bg-white text-red-600 font-bold px-6 py-3 rounded-lg inline-block hover:bg-gray-100 transition duration-300">Lihat Promo</a>
+                    </div>
+                    <div class="md:w-1/3 flex justify-center">
+                        <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                             alt="Promo Banner" class="max-w-xs rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="produk" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-800">Produk Terpopuler</h2>
+                    <p class="text-gray-600">Rekomendasi terbaik untuk Anda</p>
+                </div>
+                <a href="#" class="text-red-600 font-medium hover:underline">Lihat Semua <i class="fas fa-arrow-right ml-1"></i></a>
+            </div>
+            
+            <!-- Product Tabs -->
+            <div class="flex space-x-2 mb-6 overflow-x-auto scroll-container">
+                <button class="tab-button bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap active">Semua</button>
+                <button class="tab-button bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Laptop Gaming</button>
+                <button class="tab-button bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">PC Rakitan</button>
+                <button class="tab-button bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Aksesoris Gaming</button>
+                <button class="tab-button bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Monitor</button>
+            </div>
+            
+            <!-- Products Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" id="product-list">
+                <!-- Products will be loaded here via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">Merek Terkemuka</h2>
+            <p class="text-gray-600 text-center mb-10">Kami bekerja sama dengan brand ternama</p>
+            
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-8 items-center">
+                <div class="flex justify-center">
+                    <img src="https://logos-download.com/wp-content/uploads/2016/02/Asus_logo.png" alt="Asus" class="h-12 grayscale hover:grayscale-0 transition">
+                </div>
+                <div class="flex justify-center">
+                    <img src="https://logos-download.com/wp-content/uploads/2016/03/HP_logo_2012.png" alt="HP" class="h-12 grayscale hover:grayscale-0 transition">
+                </div>
+                <div class="flex justify-center">
+                    <img src="https://logos-download.com/wp-content/uploads/2014/09/Lenovo_logo_black.png" alt="Lenovo" class="h-12 grayscale hover:grayscale-0 transition">
+                </div>
+                <div class="flex justify-center">
+                    <img src="https://logos-download.com/wp-content/uploads/2014/09/Dell_logo.png" alt="Dell" class="h-12 grayscale hover:grayscale-0 transition">
+                </div>
+                <div class="flex justify-center">
+                    <img src="https://logos-download.com/wp-content/uploads/2016/02/Intel_logo.png" alt="Intel" class="h-12 grayscale hover:grayscale-0 transition">
+                </div>
+                <div class="flex justify-center">
+                    <img src="https://logos-download.com/wp-content/uploads/2016/05/AMD_logo_logotype.png" alt="AMD" class="h-12 grayscale hover:grayscale-0 transition">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">Apa Kata Pelanggan Kami</h2>
+            <p class="text-gray-600 text-center mb-10">Testimoni dari pelanggan setia C93 Komputer</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-red-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Ahmad Rizki</h4>
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Laptop gaming yang saya beli berkualitas tinggi dan harga bersaing. Pengiriman cepat dan packaging aman. Recommended!"</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-red-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Sari Dewi</h4>
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Pelayanan customer service sangat ramah dan membantu. PC rakitan sesuai kebutuhan saya dengan harga terjangkau."</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-red-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Budi Santoso</h4>
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Barang sampai dengan cepat, kondisi baik, dan sesuai deskripsi. Garansi resmi membuat saya tenang berbelanja di sini."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mr-3">
+                            <span class="text-white font-bold text-lg">C93</span>
+                        </div>
+                        <h2 class="text-2xl font-bold">C93 <span class="text-red-600">Komputer</span></h2>
+                    </div>
+                    <p class="text-gray-400 mb-4">Toko komputer, laptop, dan aksesoris terlengkap dengan kualitas terjamin dan harga terjangkau.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Kategori</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Laptop Gaming</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Laptop Kantor</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">PC Gaming</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">PC Kantor</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Komponen PC</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Bantuan</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Cara Belanja</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Pembayaran</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Pengiriman</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Garansi</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Kontak</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-red-600 mt-1 mr-3"></i>
+                            <span class="text-gray-400">Jl. Teknologi No. 93, Jakarta Selatan</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone text-red-600 mt-1 mr-3"></i>
+                            <span class="text-gray-400">(021) 1234-5678</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope text-red-600 mt-1 mr-3"></i>
+                            <span class="text-gray-400">info@c93komputer.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fab fa-whatsapp text-red-600 mt-1 mr-3"></i>
+                            <span class="text-gray-400">+62 812-3456-7890</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-6 text-center text-gray-400">
+                <p>&copy; 2023 C93 Komputer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay fixed inset-0 bg-black bg-opacity-50 z-50" id="cart-overlay"></div>
+    
+    <div class="cart-sidebar fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg z-50 overflow-y-auto" id="cart-sidebar">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800">Keranjang Belanja</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-black">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items will be loaded here -->
+                <p id="empty-cart-message" class="text-gray-500 text-center py-4">Keranjang belanja Anda kosong</p>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-4">
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-700">Subtotal:</span>
+                    <span id="cart-subtotal" class="text-gray-700">Rp 0</span>
+                </div>
+                <div class="flex justify-between mb-4">
+                    <span class="text-lg font-medium text-gray-800">Total:</span>
+                    <span id="cart-total" class="text-lg font-bold text-red-600">Rp 0</span>
+                </div>
+                
+                <div class="space-y-3">
+                    <button id="checkout-wa" class="w-full bg-green-600 text-white py-3 rounded-lg font-medium hover:bg-green-700 transition duration-300 flex items-center justify-center">
+                        <i class="fab fa-whatsapp mr-2"></i> Checkout via WhatsApp
+                    </button>
+                    <button id="checkout-page" class="w-full bg-red-600 text-white py-3 rounded-lg font-medium hover:bg-red-700 transition duration-300">
+                        Checkout di Halaman
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Cart Button -->
+    <button id="floating-cart" class="floating-cart bg-red-600 text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition duration-300">
+        <i class="fas fa-shopping-cart text-xl"></i>
+        <span id="floating-cart-count" class="absolute -top-1 -right-1 bg-white text-red-600 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">0</span>
+    </button>
+
+    <!-- Notification -->
+    <div id="notification" class="notification fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span>Produk berhasil ditambahkan ke keranjang!</span>
+        </div>
+    </div>
+
+    <script>
+        // Data produk
+        const products = [
+            {
+                id: 1,
+                name: "ASUS ROG Strix G15",
+                category: "laptop",
+                price: 18500000,
+                originalPrice: 21500000,
+                image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Laptop gaming dengan processor Intel i7, RAM 16GB, dan GPU RTX 3060.",
+                rating: 4.8,
+                reviewCount: 124,
+                discount: 14,
+                isBestSeller: true
+            },
+            {
+                id: 2,
+                name: "MacBook Pro M2 2023",
+                category: "laptop",
+                price: 24500000,
+                originalPrice: 0,
+                image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Laptop premium Apple dengan chip M2, layar Retina, dan performa tinggi.",
+                rating: 4.9,
+                reviewCount: 89,
+                discount: 0,
+                isBestSeller: true
+            },
+            {
+                id: 3,
+                name: "PC Gaming RTX 4080",
+                category: "komputer",
+                price: 32500000,
+                originalPrice: 36500000,
+                image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "PC gaming dengan processor Intel i9, RAM 32GB, GPU RTX 4080, dan SSD 2TB.",
+                rating: 4.7,
+                reviewCount: 67,
+                discount: 11,
+                isBestSeller: false
+            },
+            {
+                id: 4,
+                name: "Dell Inspiron All-in-One",
+                category: "komputer",
+                price: 12500000,
+                originalPrice: 14500000,
+                image: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "PC All-in-One dengan layar 24 inci, processor Intel i5, dan RAM 8GB.",
+                rating: 4.5,
+                reviewCount: 42,
+                discount: 14,
+                isBestSeller: false
+            },
+            {
+                id: 5,
+                name: "Razer DeathAdder V2",
+                category: "aksesoris",
+                price: 850000,
+                originalPrice: 1050000,
+                image: "https://images.unsplash.com/photo-1527814050087-3793815479db?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Mouse gaming dengan sensor presisi tinggi dan lampu RGB yang dapat disesuaikan.",
+                rating: 4.6,
+                reviewCount: 156,
+                discount: 19,
+                isBestSeller: true
+            },
+            {
+                id: 6,
+                name: "Logitech G Pro Keyboard",
+                category: "aksesoris",
+                price: 1850000,
+                originalPrice: 0,
+                image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Keyboard mechanical dengan switch merah, backlit RGB, dan desain ergonomis.",
+                rating: 4.7,
+                reviewCount: 98,
+                discount: 0,
+                isBestSeller: false
+            },
+            {
+                id: 7,
+                name: "Dell XPS 13 Plus",
+                category: "laptop",
+                price: 19500000,
+                originalPrice: 22500000,
+                image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Laptop ultrabook dengan layar InfinityEdge, processor Intel i7, dan RAM 16GB.",
+                rating: 4.8,
+                reviewCount: 73,
+                discount: 13,
+                isBestSeller: true
+            },
+            {
+                id: 8,
+                name: "Samsung Odyssey G7",
+                category: "aksesoris",
+                price: 6200000,
+                originalPrice: 7200000,
+                image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Monitor gaming 27 inci dengan refresh rate 240Hz dan resolusi 2K.",
+                rating: 4.9,
+                reviewCount: 112,
+                discount: 14,
+                isBestSeller: true
+            },
+            {
+                id: 9,
+                name: "HP Pavilion Gaming 15",
+                category: "laptop",
+                price: 12500000,
+                originalPrice: 14500000,
+                image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Laptop gaming dengan GTX 1650, Intel i5, dan RAM 8GB untuk gaming casual.",
+                rating: 4.4,
+                reviewCount: 87,
+                discount: 14,
+                isBestSeller: false
+            },
+            {
+                id: 10,
+                name: "HyperX Cloud II Headset",
+                category: "aksesoris",
+                price: 950000,
+                originalPrice: 1250000,
+                image: "https://images.unsplash.com/photo-1585298723680-6d84eaa9e4e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Headset gaming dengan suara surround 7.1 dan mikrofon noise-cancelling.",
+                rating: 4.7,
+                reviewCount: 203,
+                discount: 24,
+                isBestSeller: true
+            }
+        ];
+
+        // State aplikasi
+        let cart = [];
+        let currentCategory = 'all';
+
+        // DOM Elements
+        const productList = document.getElementById('product-list');
+        const cartItems = document.getElementById('cart-items');
+        const cartCount = document.getElementById('cart-count');
+        const floatingCartCount = document.getElementById('floating-cart-count');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartTotal = document.getElementById('cart-total');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartToggle = document.getElementById('cart-toggle');
+        const floatingCart = document.getElementById('floating-cart');
+        const closeCart = document.getElementById('close-cart');
+        const checkoutWa = document.getElementById('checkout-wa');
+        const checkoutPage = document.getElementById('checkout-page');
+        const notification = document.getElementById('notification');
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMobileMenu = document.getElementById('close-mobile-menu');
+        const tabButtons = document.querySelectorAll('.tab-button');
+
+        // Format harga ke Rupiah
+        function formatRupiah(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Render produk
+        function renderProducts() {
+            productList.innerHTML = '';
+            
+            const filteredProducts = currentCategory === 'all' 
+                ? products 
+                : products.filter(product => product.category === currentCategory);
+            
+            filteredProducts.forEach(product => {
+                const discountPercentage = product.discount > 0 
+                    ? `<div class="discount-badge">-${product.discount}%</div>` 
+                    : '';
+                
+                const bestSellerBadge = product.isBestSeller 
+                    ? `<div class="best-seller-badge">Terlaris</div>` 
+                    : '';
+                
+                const originalPrice = product.originalPrice > 0 
+                    ? `<div class="text-gray-500 text-sm line-through">${formatRupiah(product.originalPrice)}</div>` 
+                    : '';
+                
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card bg-white rounded-xl overflow-hidden';
+                productCard.innerHTML = `
+                    <div class="relative">
+                        <div class="h-40 overflow-hidden">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                        </div>
+                        ${discountPercentage}
+                        ${bestSellerBadge}
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-800 mb-1 truncate">${product.name}</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="rating-stars text-sm mr-2">
+                                ${renderStars(product.rating)}
+                            </div>
+                            <span class="text-gray-500 text-xs">(${product.reviewCount})</span>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-red-600 font-bold text-lg">${formatRupiah(product.price)}</div>
+                            ${originalPrice}
+                        </div>
+                        <button class="add-to-cart w-full bg-red-600 text-white py-2 rounded-lg font-medium hover:bg-red-700 transition duration-300 flex items-center justify-center" data-id="${product.id}">
+                            <i class="fas fa-cart-plus mr-2"></i> Tambah
+                        </button>
+                    </div>
+                `;
+                productList.appendChild(productCard);
+            });
+            
+            // Tambahkan event listener untuk tombol tambah ke keranjang
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    addToCart(productId);
+                });
+            });
+        }
+
+        // Render bintang rating
+        function renderStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Tambah produk ke keranjang
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            updateCart();
+            showNotification();
+        }
+
+        // Hapus produk dari keranjang
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // Update tampilan keranjang
+        function updateCart() {
+            // Update jumlah item di keranjang
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            floatingCartCount.textContent = totalItems;
+            
+            // Update daftar item di keranjang
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+            } else {
+                emptyCartMessage.classList.add('hidden');
+                
+                cart.forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'flex items-center border-b border-gray-200 pb-4';
+                    cartItem.innerHTML = `
+                        <div class="flex-shrink-0 w-16 h-16 bg-gray-200 rounded-md overflow-hidden">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h4 class="text-sm font-medium text-gray-800 truncate">${item.name}</h4>
+                            <div class="flex justify-between items-center mt-1">
+                                <span class="text-red-600 font-bold">${formatRupiah(item.price)}</span>
+                                <div class="flex items-center">
+                                    <button class="decrease-quantity text-gray-500 hover:text-black" data-id="${item.id}">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <span class="mx-2 text-black">${item.quantity}</span>
+                                    <button class="increase-quantity text-gray-500 hover:text-black" data-id="${item.id}">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="remove-item ml-2 text-gray-400 hover:text-red-600" data-id="${item.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `;
+                    cartItems.appendChild(cartItem);
+                });
+                
+                // Tambahkan event listener untuk tombol di keranjang
+                document.querySelectorAll('.increase-quantity').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = parseInt(this.getAttribute('data-id'));
+                        const item = cart.find(item => item.id === productId);
+                        if (item) item.quantity += 1;
+                        updateCart();
+                    });
+                });
+                
+                document.querySelectorAll('.decrease-quantity').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = parseInt(this.getAttribute('data-id'));
+                        const item = cart.find(item => item.id === productId);
+                        if (item) {
+                            if (item.quantity > 1) {
+                                item.quantity -= 1;
+                            } else {
+                                removeFromCart(productId);
+                            }
+                        }
+                        updateCart();
+                    });
+                });
+                
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = parseInt(this.getAttribute('data-id'));
+                        removeFromCart(productId);
+                    });
+                });
+            }
+            
+            // Update total harga
+            const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            cartSubtotal.textContent = formatRupiah(totalPrice);
+            cartTotal.textContent = formatRupiah(totalPrice);
+        }
+
+        // Tampilkan notifikasi
+        function showNotification() {
+            notification.classList.add('active');
+            setTimeout(() => {
+                notification.classList.remove('active');
+            }, 3000);
+        }
+
+        // Checkout via WhatsApp
+        function checkoutViaWhatsApp() {
+            if (cart.length === 0) {
+                alert('Keranjang belanja Anda kosong!');
+                return;
+            }
+            
+            let message = "Halo, saya ingin memesan produk berikut dari C93 Komputer:%0A%0A";
+            
+            cart.forEach((item, index) => {
+                message += `${index + 1}. ${item.name} - ${formatRupiah(item.price)} x ${item.quantity}%0A`;
+            });
+            
+            const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            message += `%0ATotal: ${formatRupiah(totalPrice)}%0A%0ATerima kasih!`;
+            
+            const phoneNumber = "6281234567890"; // Ganti dengan nomor WhatsApp toko
+            const url = `https://wa.me/${phoneNumber}?text=${message}`;
+            
+            window.open(url, '_blank');
+        }
+
+        // Event Listeners
+        cartToggle.addEventListener('click', () => {
+            cartSidebar.classList.add('active');
+            cartOverlay.classList.add('active');
+        });
+
+        floatingCart.addEventListener('click', () => {
+            cartSidebar.classList.add('active');
+            cartOverlay.classList.add('active');
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        });
+
+        cartOverlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        });
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeMobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Hapus kelas aktif dari semua tombol tab
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Tambahkan kelas aktif ke tombol yang diklik
+                this.classList.add('active');
+            });
+        });
+
+        checkoutWa.addEventListener('click', checkoutViaWhatsApp);
+
+        checkoutPage.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Keranjang belanja Anda kosong!');
+                return;
+            }
+            alert('Fitur checkout di halaman akan segera tersedia!');
+        });
+
+        // Inisialisasi
+        renderProducts();
+        updateCart();
+
+        // Countdown timer untuk promo
+        function updateCountdown() {
+            // Implementasi countdown timer bisa ditambahkan di sini
+        }
+
+        // Jalankan countdown setiap detik
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
